@@ -246,6 +246,8 @@
             case 'flvp': return "$url.flvp";
             case 'flv' : return "$url.flv";
             case 'mp4' : return "$url.mp4";
+	    case 'ogv' : return "$url.ogv";
+	    case 'webm': return "$url.webm";
         }
     // No more dsmyth filters, so return the URL no matter what the browser is.
         return $url;

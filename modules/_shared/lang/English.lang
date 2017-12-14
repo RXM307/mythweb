@@ -32,7 +32,9 @@
 "%s Songs (%s)"
 "(height is calculated automatically from the recording aspect ratio)"
 "1 - Lowest"
+"1000"
 "4 - Highest"
+"720"
 "Aborted"
 "Aborting"
 "Action"
@@ -310,6 +312,7 @@
 "Hosted by"
 "Hour"
 "Hour Format"
+"HTML5 Streaming"
 "hue"
 "Identifiable episode"
 "Ignore generic shows"
@@ -325,19 +328,27 @@
 "info: dont record"
 "info: flvplayer"
     <p>
-    Flash video playback is currently only a proof-of-concept and should be
-    considered <b>EXTREMELY</b> experimental, which is why it has been disabled by
-    default.
+    Video streaming in mythweb is currently based on HTML5 webm/ogg and flash flv.
+    <strong>NOTE</strong>: Today there is no single format supported by all browsers.
+    By this different browsers needs different configuration<br>
+    mythweb provides following streaming support:
+    <ul>
+    <li><strong>Google Chrome:</strong>  Highly unstable. Flash fall-back adviced. Uncheck "HTML5 Streaming"</li>
+    <li><strong>Mozilla Firefox:</strong>  Quite stable. Enable HTML5 streaming by checking "HTML5 Streaming"</li>
+    <li><strong>Safari (MacOS):</strong>  Only Flash fall-back possible so uncheck "HTML5 Streaming"</li>
+    <li><strong>Safati (iOS):</strong>  Flash is not supported so no fall-back possible. Use HLS client"</li>
+    <li><strong>IE8 and older:</strong>  Only Flash fall-back possible so uncheck "HTML5 Streaming"</li>
+    <li><strong>IE9 and newer:</strong>  Highly unstable. Prefer Flash fall-back by unchecking "HTML5 Streaming"</li>
+    </ul>
     </p>
     <p>
-    It currently expects that ffmpeg is installed and compiled with mp3
-    support, and that the recordings files are accessible to your webserver
-    userid.  It probably won't work with Nupplevideo files, and in the end,
-    it may just not work at all (or maybe even worse).
+    This feature expects that myth is build with libx264, libvpx and libtheora libraries. Also for
+    flash fallback, Adobe Flash player must be installed on client side.
     </p>
     <p>
-    Enable this feature at your own risk, and don't expect too much
-    official help until it has left the experimental phase.
+    Enabling HTML5 streaming may cause not stable streaming as majority browsers (except Mozzilla)
+    offers not good video playabck stability. By this prefered mode is Flash fall-back mode
+    (with "HTML5 Streaming" option disabled).
     </p>
 "info: hidden advanced schedule"
     The advanced scheduling options are currently hidden.
@@ -423,6 +434,7 @@
 "Movies"
 "Movies, 3&frac12; Stars or more"
 "Movies, Stinkers (2 Stars or less)"
+"mplexid"
 "Music"
 "Music Specials"
 "My Session"
@@ -457,6 +469,7 @@
 "New Titles, Premieres"
 "No"
 "NO DATA"
+"No episodes"
 "No Frontends allow remote control."
 "No Genre"
 "No matches found"
@@ -515,6 +528,7 @@
 "Play"
 "Play Recording on Frontend"
 "Play this Album Now"
+"Play this Artist Now"
 "Play This Playlist Now"
 "Play this Playlist Now"
 "Play this Song Now"

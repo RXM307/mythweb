@@ -64,6 +64,11 @@
          value="<?php echo html_entities(_or(setting('WebFLV_ab'), 64)) ?>" />
          kbps</td>
 </tr><tr>
+    <th><?php echo t('HTML5 Streaming') ?>:</th>
+    <td><input class="radio" type="checkbox" name="HTML5stream"
+         title="Enable HTML5 Streaming (with Flash Video as fallback)"
+         <?php if (setting('WebHTML5Stream_on')) echo ' CHECKED' ?>></td>
+</tr><tr>
     <td align="right"><input type="reset"  class="submit" value="<?php echo t('Reset') ?>"></td>
     <td align="center"><input type="submit" class="submit" name="save" value="<?php echo t('Save') ?>"></td>
 </tr>

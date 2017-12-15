@@ -23,7 +23,8 @@
     // Bitrates
         setting('WebFLV_vb', null, $_POST['vbitrate'] > 0 ? $_POST['vbitrate'] : 256);
         setting('WebFLV_ab', null, $_POST['abitrate'] > 0 ? $_POST['abitrate'] : 64);
-
+    // HTML5 streaming on/off
+        setting('WebHTML5Stream_on', null, $_POST['HTML5stream'] ? 1 : 0);
     }
 
 // These settings are limited to MythWeb itself

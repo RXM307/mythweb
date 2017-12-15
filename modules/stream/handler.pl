@@ -12,14 +12,35 @@
 
     require "modules/$Path[0]/tv.pl";
 
+    # Use the MythTV Services API URL if the $filename URL is not local
     unless ($filename) {
-        print header(),
-              "$basename does not exist in any recognized storage group directories for this host.";
-        exit;
+        # Retrieve the backend IP and port
+        $sh = $dbh->prepare('SELECT data FROM settings WHERE value=?');
+        $sh->execute('BackendServerIP');
+        my ($backend_server_ip)   = $sh->fetchrow_array;
+        $sh->execute('BackendStatusPort');
+        my ($backend_status_port) = $sh->fetchrow_array;
+        $sh->finish();
+        
+        # Reformat the recording start time
+        use HTTP::Date qw(time2isoz);
+        $starttime_isoz = time2isoz($starttime);
+        $starttime_isoz =~ s/ /T/g;
+        
+        # Generate the MythTV Services API URL
+        $filename = "http://${backend_server_ip}:${backend_status_port}/Content/GetRecording?ChanId=${chanid}&StartTime=${starttime_isoz}";
     }
 
+# HTML5 video/ogv
+    if ($ENV{'REQUEST_URI'} =~ /\.ogv$/i) {
+        require "modules/$Path[0]/stream_ogv.pl";
+    }
+# HTML5 video/webm
+    elsif ($ENV{'REQUEST_URI'} =~ /\.webm$/i) {
+        require "modules/$Path[0]/stream_webm.pl";
+    }
 # ASX mode?
-    if ($ENV{'REQUEST_URI'} =~ /\.asx$/i) {
+    elsif ($ENV{'REQUEST_URI'} =~ /\.asx$/i) {
         require "modules/$Path[0]/stream_asx.pl";
     }
 # Flash?

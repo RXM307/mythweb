@@ -36,6 +36,11 @@
 
 <script type="text/javascript">
 <!--
+// Android devices need the following to play HTML5 video. Taken from ticket #10529
+    var video = document.getElementById('video');
+    video.addEventListener('click', function(){
+        video.play();
+    }, false);
 
 // Keep track of the autoexpire flag
     var autoexpire = <?php echo $program->auto_expire ? 1 : 0 ?>;
@@ -665,26 +670,21 @@
 
             <div class="x-pixmap">
 <?php   if (setting('WebFLV_on')) { ?>
+<?php   if (setting('WebHTML5Stream_on')) { ?>
+ 	    <video id="video" controls="controls" preload="metadata" width="<?php echo $flv_w ?>" height="<?php echo $flv_h ?>" poster="<?php echo $program->thumb_url($flv_w,0) ?>">
+ 	        <source src="<?php echo video_url($program, 'webm'); ?>" type="video/webm" />
+ 	        <source src="<?php echo video_url($program, 'ogv'); ?>" type="video/ogg" />
+<?php       } ?>
 <?php       if (file_exists('js/libs/flowplayer/flowplayer.swf')) { ?>
-
-
-          <!-- this A tag is where your Flowplayer will be placed. it can be anywhere -->
-            <a href=""
-                style="display:block;width:<?php echo $flv_w ?>px;height:<?php echo $flv_h ?>px"
-                id="player">
-            </a>
-
-            <!-- this will install flowplayer inside previous A- tag. -->
-            <script>
-                flowplayer(
-                    "player",
-                    "<?php echo root_url ?>js/libs/flowplayer/flowplayer.swf", {
-                    playlist: [
+                <a href="" style="display:block;width:<?php echo $flv_w ?>px;height:<?php echo $flv_h ?>px" id="flash-player"></a>
+		<script>
+		    flowplayer("flash-player","<?php echo root_url ?>js/libs/flowplayer/flowplayer.swf", {
+		        playlist: [
                         // this first PNG clip works as a splash image
                         {
                             url: '<?php echo $program->thumb_url($flv_w,0) ?>',
                             scaling: 'orig'
-                            },
+                        },
                         // Then we have the video
                         {
                             url: "<?php echo video_url($program, 'flv'); ?>",
@@ -694,10 +694,10 @@
                             // Would be nice to auto-buffer, but we don't want to
                             // waste bandwidth and CPU on the remote machine.
                             autoBuffering: false
-                            }
+                        }
                         ]}
                     );
-            </script>
+                </script>
 <?php       } elseif (file_exists('modules/tv/MFPlayer.swf')) { ?>
                     <script language="JavaScript" type="text/javascript">
                     <!--
@@ -813,7 +813,12 @@
 <?php   } else { ?>
                 <a href="<?php echo $program->url ?>" title="<?php echo t('Direct Download') ?>"
                     ><img src="<?php echo $program->thumb_url($flv_w,0) ?>" width="<?php echo $flv_w ?>"></a>
-<?php   } ?></td>
+<?php   } ?>
+<?php   if (setting('WebHTML5Stream_on')) { ?>
+	    </video>
+<?php   } ?>
+ 
+	</td>
             </div>
             <div class="x-links">
                 <a href="<?php echo video_url($program, 'asx') ?>" title="<?php echo t('ASX Stream') ?>"
